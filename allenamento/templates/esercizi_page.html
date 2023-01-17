@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %}{{ block.super }} | Lista Esercizi {% endblock head_title %}
+{% block content %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+
+    <style>
+      @media screen and (min-width: 480px) {
+        .ex-container  img{
+        width: 12vh !important;
+        height: 12vh !important;
+        margin: 1.5vh !important;
+      }
+   
+      }
+      .form-group{
+        width: 90%;
+        margin-left: 5%;
+        
+      }  
+
+      .ex-container{
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 8%;
+        height: 15vh;
+        background-color: #4edf4e;
+        position: relative;
+      }
+      .ex-container img{
+        position: absolute;
+        width: 15vw;
+        height: 60%;
+        margin-top: 5%;
+        margin-left: 2%;
+      }
+
+      .ex-container .content{
+        padding: 3%;
+        position: absolute;
+        width: 70%;
+        margin-left: 30%;
+        height: 100%;
+        text-decoration: none;
+        color: black;
+      }
+      
+        </style>
+  </head>
+  <body>
+    <form action="{% url 'funzione_cerca' %}">
+      <div class="form-group">
+          <input name="q" type="search" class="form-control" id="exampleFormControlInput1" placeholder="Ricerca Esercizio">
+          
+        </div>
+    </form>
+    <br>
+    {% for esercizio in esercizi %}
+    <a href="{% url 'esercizio-view' esercizio.slug %}">
+      <div  class="ex-container">
+        
+          {% if esercizio.tipo.pk == 1 %}
+          <img src="/static/training.png" alt=""> 
+      {% elif  esercizio.tipo.pk == 2 %}
+          <img src="/static/pushup.png" alt="">
+      {% elif  esercizio.tipo.pk == 4 %}
+          <img src="/static/leg.png" alt="">
+      {% elif  esercizio.tipo.pk == 3 %}
+            <img src="/static/abdomen.png" alt="">
+            {% endif %}
+            {% if  esercizio.tipo.pk == 5 %}
+            <div class="blocco-immagine"><img src="/static/heart.png" alt=""></div>
+      {% endif %}
+       
+     
+        <div class="content">
+          <h4><b>{{ esercizio.nome }}</b></h4>
+          <p>Tipo: <b>{{ esercizio.tipo }}</b></p>
+          
+        </div>
+      </div>
+
+    </a>
+      
+    {% endfor %}
+
+   
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  </body>
+</html>
+{% endblock content %}

@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <style>
+        @media screen and (min-width:480px) {
+            .blocco-container .blocco-immagine{
+            margin: 1.5vh !important;
+            width: 12vh !important;
+            height: 12vh !important;
+            padding: 0 !important;
+        }
+        .blocco-container .blocco-immagine img{
+        width: 100% !important;
+        height: 100% !important;
+       margin: 0 !important;
+       padding: 0 !important;
+       position: relative !important;
+        }
+        }
+        .foglio{
+            position: relative;
+            margin:2.5% ;
+            width: 95%;
+            min-height: 40vh;
+            background-color: #79db79;
+            padding-left: 2.5%;
+            padding-right: 2.5%;
+            padding-bottom: 10vh;
+        }
+        .foglio .bi-plus-circle-fill{
+            position: absolute;
+            bottom: 2%;
+            margin-left: 42vw;
+            color: #1e1e1e;
+            font-size: 30px;
+            
+        }
+        .blocco-container{
+            
+            position: relative;
+            width: 100%;
+            margin-top: 2.5%;
+            min-height: 15vh;
+            border: 1px solid #1e1e1e;
+        }
+
+        .blocco-container .bi-trash-fill{
+            position: absolute;
+            margin-left: 85%;
+            margin-top: 20px;
+            color: #1e1e1e;
+            font-size: 5vh;
+        }
+        .blocco-container .blocco-immagine{
+            position: absolute;
+            padding: 2%;
+            padding-top: 3%;
+            width: 20vw;
+            height: 100%;
+        }
+
+        .blocco-container .blocco-immagine img{
+            position: absolute;
+        width: 15vw;
+        height: 60%;
+        margin-top: 5%;
+        margin-left: 2%;
+        }
+        .blocco-container .blocco-descrizione{
+            color: #1e1e1e;
+            position: absolute;
+            width: 70%;
+            margin-left: 30%;
+            height: 100%;
+            padding-left: 2%;
+        }
+     #thumbs-up-scheda{
+        
+        position: relative;
+           font-size: 15vw;
+           margin-left: 42.5vw;
+           margin-left: 50% - 30px ;
+            color: #4edf4e;
+          
+        }
+        .thumbs-up-scheda a{
+            height:200px;
+            width: 200px;
+            
+        }
+        .pubblica-container{
+            position: relative;
+            margin-top: 5vh;
+            width: 35%;
+            margin-left: 30%;
+            height: 6vh;
+            background-color: #4edf4e;
+            border: 0px;
+            border-radius: 18px;
+        }
+
+        .pubblica-container h6{
+            font-weight: 400;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            text-decoration: none;
+            color: #1e1e1e;
+        }
+     #btn-zavorra{
+        background-color: #1e1e1e;
+        border: 0px;
+        width: 50px;
+        height: 20px;
+        padding: 2px;
+        font-size: 12px;
+        
+     }
+     .blocco-descrizione #clock{
+        font-size: 21px;
+        margin-right:2px ;
+     }
+    </style>
+    
+  </head>
+  <body>
+
+    <div class="foglio">
+        <h1><b>{{ scheda.nome_scheda }}</b> </h1>
+        <h3 style="margin-bottom: 5vh ;">user : <b>{{ scheda.user }}</b></h3>
+
+
+
+    {% for blocco in blocchi %}
+    <a href="{% url 'esercizio-view' blocco.esercizio.pk %}">
+        <div class="blocco-container">
+            {% if blocco.esercizio.tipo.pk == 1 %}
+            
+          <div class="blocco-immagine"><img src="/static/training.png" alt=""></div>  
+          {% elif  blocco.esercizio.tipo.pk == 2 %}
+          <div class="blocco-immagine"><img src="/static/pushup.png" alt=""></div>
+          {% elif  blocco.esercizio.tipo.pk == 4 %}
+          <div class="blocco-immagine"><img src="/static/fitness.png" alt=""></div>
+          {% elif  blocco.esercizio.tipo.pk == 3 %}
+                <div class="blocco-immagine"><img src="/static/leg.png" alt=""></div>
+                {% elif  blocco.esercizio.tipo.pk == 5 %}
+                <div class="blocco-immagine"><img src="/static/heart.png" alt=""></div>
+                {% endif %}
+
+            <div class="blocco-descrizione">
+               <a href="" style="color: black;text-decoration: none;"> <h5><b>{{ blocco }} </b></h5></a> 
+                
+               <p style="color: black;"> {% if blocco.set > 0 %} <b>SET</b> : <b>{{ blocco.set }}</b> {% endif %}&nbsp; &nbsp; &nbsp; {% if blocco.duration > 0 %} <a href="{% url 'timer-blocco' scheda.slug blocco.id %}" style="color: black; text-decoration: none;"><i  class="bi bi-clock-fill" id="clock" ></i> </a><strong>{{ blocco.duration }}''</strong>
+                {% endif %}<br>{% if blocco.reps > 0 %} <b>REPS</b> : <b>{{ blocco.reps }}</b> {% endif %}  {% if blocco.zavorra > 0 %}
+                &nbsp; &nbsp;<button class="btn btn-success" id="btn-zavorra">+<strong>{{ blocco.zavorra }} KG</strong></button>
+                {% endif %}   </p>
+                
+                     
+                 
+    
+            </div>
+            {% if request.user == scheda.user %}
+                <a href="{% url 'elimina-blocco' scheda.slug blocco.id %}" class="bi bi-trash-fill"></a>
+           
+            {% endif %}
+           
+        </div>
+      
+    </a>
+    
+    {% endfor %} 
+
+
+{% if request.user ==  scheda.user  %}
+<a href="{% url 'crea-blocco' scheda.slug %}" class="bi bi-plus-circle-fill"></a>
+
+{% endif %}
+
+    </div>
+
+{% if request.user.is_authenticated %}    
+    {% if request.user in mi_piace %}
+    <a href="{% url 'mi-piace' scheda.slug %}" id="thumbs-up-scheda"  class="bi bi-hand-thumbs-up-fill"></a>
+    {% else %}
+    <a href="{% url 'mi-piace' scheda.slug %}" id="thumbs-up-scheda"  class="bi bi-hand-thumbs-up"></a>
+    {% endif %}
+{% endif %}
+
+
+
+{% if request.user.is_authenticated and request.user ==  scheda.user%}    
+    {% if scheda.pubblica is False %}
+    <a href="{% url 'condividi' scheda.slug %}"><div class="pubblica-container" ><h6><strong><strong>CONDIVIDI</strong></strong></h6></div>
+    </a>
+    {% endif %}
+{% endif %}
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+{% endblock content %} 
+
+
+
+
+
