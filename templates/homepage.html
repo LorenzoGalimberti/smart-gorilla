@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+
+    <style>
+        body{
+            background-color: #1e1e1e;
+            margin: 0;
+            padding: 0;
+        }
+        .crea-allenamento, .schede-utenti ,.mie-schede , .lista-esercizi{
+            border: 10px solid rgb(66, 236, 66);
+            background-color: black;
+            position: relative;
+            width: 90%;
+            margin: 5%;
+            height: 80vh;
+            
+        }
+        .crea-allenamento span, .schede-utenti span,.mie-schede span, .lista-esercizi span{
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            color: rgb(66, 236, 66);
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 200%;
+        }
+    </style>
+  </head>
+  <body>
+    {% if request.user.is_authenticated %}
+    
+     <a  href="{% url 'crea-allenamento'  %}">
+        <div class="crea-allenamento"><span><b>CREA ALLENAMENTO</b></span></div>
+        </a>
+    {% else %}
+     <a  href="{% url 'login'  %}"> <div class="crea-allenamento"><span><b>CREA ALLENAMENTO</b></span></div></a>
+    {% endif %}
+    
+     <a href="{% url 'schedario-view'  %}"><div class="schede-utenti"><span><b>SCHEDE UTENTI</b></span></div> </a>
+    
+    
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'mie-schede-view'  %}"><div class="mie-schede"><span><b>LE MIE SCHEDE</b></span></div></a>
+    {% else %}
+    <a href="{% url 'login'  %}"><div class="mie-schede"><span><b>LE MIE SCHEDE</b></span></div></a>
+    {% endif %}
+    
+     <a href="{% url 'funzione_cerca'  %}"><div class="lista-esercizi"><span><b>LISTA ESERCIZI</b></span></div></a>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+{% endblock content %}

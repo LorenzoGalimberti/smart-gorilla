@@ -1,0 +1,20 @@
+{% block content %}
+{{ esercizi }}
+<head>
+    <style>
+        .form-control{
+            width: 60%;
+            height: 15%;
+            margin-left: 20%;
+                    }
+       
+    </style>
+</head>
+ 
+
+  <form action="{% url 'funzione_cerca' %}">
+    <div class="form-group">
+      <input name="q" type="search" class="form-control" id="exampleFormControlInput1" placeholder="Ricerca Esercizio">
+      
+</form>
+{% endblock content %}

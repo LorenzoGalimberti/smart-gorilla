@@ -1,0 +1,140 @@
+{% load static %}
+{% load embed_video_tags  %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap" rel="stylesheet">
+    <title>{% block head_title %}Smart Gorilla {% endblock head_title %}</title>  
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        background-color: #1e1e1e;
+        margin-bottom: 5vh;
+      }
+      /*navbar*/
+      .navbar{
+        z-index: 1;
+        min-height: 20vh;
+        margin-bottom:  10vh;
+
+      }
+      .nav-link{
+        color: aliceblue !important;
+
+      }
+      .navbar-toggler{
+        font-size: 30px;
+        border: 0;
+      }
+      .navbar-brand img{
+        height: 120px;
+        width: 120px;
+      }
+      .navbar .bi-person{
+        font-size: 50px;
+        margin-right: 10%;
+      }
+     .navbar .navbar-brand {
+      margin-left: 4%;
+     width: 40%;
+        color: #4edf4e;
+      }
+      .navbar .navbar-toggler-icon{
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(66,236,66, 5)' stroke-width='4' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+
+      }
+     
+      .show{
+        border: 0;
+       
+        background-color: #1e1e1e;
+      }
+      .show a{
+        color: white;
+      }
+    </style>
+
+
+  </head>
+  <body>
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/"><img src="/static/logofinal2.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+           
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                funzionalità
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'crea-allenamento' %}">crea scheda</a>
+                <a class="dropdown-item" href="{% url 'mie-schede-view' %}">i miei allenamenti</a>
+                <a class="dropdown-item" href="{% url 'funzione_cerca' %}">esercizi</a>
+              </div>
+            </li>
+           
+          </ul>
+          <ul class="navbar-nav ml-auto"> 
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown mr-2">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ request.user }}  &nbsp;<i class="fas fa-user-alt	"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/accounts/logout/">Logout</a>
+                <a class="dropdown-item" href="/accounts/password_reset/">Cambio password</a>
+           
+              </div>
+            </li>
+            
+            {% else %}
+            <a href="/accounts/login" class="nav-item mr-5" style="text-decoration: none; color:black;"> Login</a>
+           
+            {% endif %}
+           
+           
+    
+          </ul>
+        </div>
+      </nav>
+      
+      
+      <!--
+        <nav class="navbar navbar-expand-lg navbar-dark ">
+        <a class="navbar-brand" href="/"><img src="/static/logofinal1.png" alt=""></a>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </div>
+      </nav>
+      -->
+    {% block content %}
+    
+    {% endblock %}
+    <div class="end-page"></div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  </body>
+</html>
